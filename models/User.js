@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// this creates a user object that is connected to mongoDB
+
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
