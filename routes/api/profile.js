@@ -6,6 +6,7 @@ const { check, validationResult } = require('express-validator');
 const { compareSync } = require('bcryptjs');
 const { json } = require('express');
 var ObjectId = require('mongoose').Types.ObjectId;
+var User = require('../../models/User');
 
 // @route GET api/profile/me
 // @desc Get user specific profile
@@ -135,6 +136,22 @@ router.get('/:user_id', async (req, res) => {
       return res.json(profile);
     }
     return res.status(400).send('No profiles found');
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error.');
+  }
+});
+
+// @route DELETE api/profile/
+// @desc delete Profile, user & posts
+// @access Public
+router.delete('/', auth, async (req, res) => {
+  try {
+    const user_id = res.user.id;
+    const user = await User.findByIdAndDelete(user_id);
+    const profile = await Profile.findOneAndDelete({ user: user_id });
+
+    return res.send('Profile deleted!');
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error.');
