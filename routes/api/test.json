@@ -1,0 +1,64 @@
+[
+    {
+        "social": {
+            "youtube": "www.youtube.com",
+            "twitter": "www.twitter.com",
+            "facebook": "www.facebook.com",
+            "linkedin": "www.linkedin.com",
+            "instagram": "www.instagram.com"
+        },
+        "skills": [
+            "skill1",
+            "skill2",
+            "skill3"
+        ],
+        "_id": "601089284fa050037867371b",
+        "company": "Connexone Updated",
+        "location": "19 Rae Street SK39LJ UK",
+        "status": "Full Time Employed",
+        "user": {
+            "_id": "600c274eb5e27c37e831f22b",
+            "name": "Matthew",
+            "password": "$2a$10$fnM8FrfcYcpxT0tKSVGJ/eU.a7q/Fx3AtYoTnER4Z7Tqbeu8DWhoW",
+            "email": "160220@virtualwindow.co.za",
+            "avatar": "//www.gravatar.com/avatar/ee9124de602d4e70332300214027d80b?s=200&r=pg&d=mm",
+            "date": "2021-01-23T13:40:30.989Z",
+            "__v": 0
+        },
+        "experience": [],
+        "education": [],
+        "date": "2021-01-26T21:27:04.842Z",
+        "__v": 0
+    },
+    {
+        "social": {
+            "youtube": "www.youtube.com",
+            "twitter": "www.twitter.com",
+            "facebook": "www.facebook.com",
+            "linkedin": "www.linkedin.com",
+            "instagram": "www.instagram.com"
+        },
+        "skills": [
+            "skill1",
+            "skill2",
+            "skill3"
+        ],
+        "_id": "601599b2a39c0e26fcd612db",
+        "company": "Connexone Updated",
+        "location": "19 Rae Street SK39LJ UK",
+        "status": "Full Time Employed",
+        "user": {
+            "_id": "601599a4a39c0e26fcd612da",
+            "name": "Matthew1",
+            "password": "$2a$10$M2R4DdLabaaLZEbjcSfYKeriBPWj7mnffq/amakdELIOuc/0ZmfbO",
+            "email": "160220@virtualwindow.co.zaa",
+            "avatar": "//www.gravatar.com/avatar/9ca5f01e1f86451f71e2c919a67f31ab?s=200&r=pg&d=mm",
+            "date": "2021-01-30T17:38:44.915Z",
+            "__v": 0
+        },
+        "experience": [],
+        "education": [],
+        "date": "2021-01-30T17:38:58.790Z",
+        "__v": 0
+    }
+]
