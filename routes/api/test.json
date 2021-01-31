@@ -1,9 +1,9 @@
 {
-    "title": "Custom Dev Fullstack Developer",
-    "company": "Connexone",
-    "location": "Manchester UK",
-    "from": "2020-03-01",
-    "to": "2021-03-01",
-    "current": true,
-    "description": "Custom web developer - Time to find a better paying fully remote job. Get after it my son"
+    "school": "Open Window Institute",
+    "degree": "BA Interactive Development",
+    "fieldOfStudy": "Interactive Development",
+    "from": "2016-01-01",
+    "to": "2019-01-01",
+    "current": false,
+    "description": "Studied at college"
 }
