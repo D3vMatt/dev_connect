@@ -7,6 +7,8 @@ const { compareSync } = require('bcryptjs');
 const { json } = require('express');
 var ObjectId = require('mongoose').Types.ObjectId;
 var User = require('../../models/User');
+const config = require('config');
+const request = require('request');
 
 // @route GET api/profile/me
 // @desc Get user specific profile
@@ -311,6 +313,38 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
     return res.json(profile);
   } catch (error) {
     return res.status(500).send('Server error');
+  }
+});
+
+// @route GET api/profile/github/:username
+// @desc Get github info for username
+// @access Public
+router.get('/github/:username', async (req, res) => {
+  const git_username = req.params.username;
+  try {
+    const request_options = {
+      uri: `https://api.github.com/users/${git_username}/repos?per_page=5&sort=created:asc&client_id=${config.get(
+        'githubClientID'
+      )}&client_secret=${config.get('githubSecret')}`,
+      method: 'GET',
+      headers: { 'user-agent': 'node.js' },
+    };
+
+    request(request_options, (error, response, body) => {
+      if (error) {
+        console.error(error);
+      }
+
+      if (response.statusCode !== 200) {
+        console.log(response);
+        return res.status(404).json({ msg: 'No Github profile found' });
+      }
+
+      return res.json(JSON.parse(body));
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error.');
   }
 });
 

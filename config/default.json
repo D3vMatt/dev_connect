@@ -1,4 +1,6 @@
 {
     "mongoURI": "mongodb+srv://admin:Polarbear1@devconnector.d35fp.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "jwtSecret": "polarbear!" 
+    "jwtSecret": "polarbear!",
+    "githubClientID": "480e588198d1261ed6dd",
+    "githubSecret": "105b717f1ea37fe245e749c9cddb6bc829e2d3f1" 
 }
