@@ -1,9 +1,16 @@
 {
-    "school": "Open Window Institute",
-    "degree": "BA Interactive Development",
-    "fieldOfStudy": "Interactive Development",
-    "from": "2016-01-01",
-    "to": "2019-01-01",
-    "current": false,
-    "description": "Studied at college"
+    "text": "This is a new post",
+    "name": "Matthew the great",
+    "avatar": "This is the avatar",
+    "likes": [
+        {"user":""}
+    ],
+    "comments": [
+        {
+            "user": "",
+            "name": "Dingleberry 123",
+            "avatar": "21321",
+            "text": "34554"
+        }
+    ]
 }
