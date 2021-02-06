@@ -21,7 +21,7 @@ router.post(
     }
 
     try {
-      const postObject = ({ text, like, comments } = req.body);
+      const postObject = ({ text, comments } = req.body);
 
       const user = await User.findById(res.user.id);
       postObject.user = user.id;
@@ -102,6 +102,175 @@ router.delete('/:id', auth, async (req, res) => {
 
     post = await Post.findByIdAndRemove(post_id);
     res.json(post);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route PUT api/posts/like/:id
+// @desc Like post by id
+// @access Private
+router.put('/like/:id', auth, async (req, res) => {
+  let post_id = req.params.id;
+  let user_id = res.user.id;
+
+  if (!mongoose.Types.ObjectId.isValid(post_id)) {
+    return res.status(400).send('Post not found');
+  }
+
+  try {
+    post = await Post.findById(post_id);
+    if (!post) {
+      return res.status(400).send('Post not found');
+    }
+
+    // check if post has already been liked by user
+    if (
+      post.likes.filter((like) => like.user.toString() === user_id).length > 0
+    ) {
+      return res.status(400).json({ msg: 'You have already liked this post' });
+    }
+
+    post.likes.unshift({ user: user_id });
+
+    post = await post.save();
+
+    res.json(post.likes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route PUT api/posts/unlike/:id
+// @desc Unlike post by id
+// @access Private
+router.put('/unlike/:id', auth, async (req, res) => {
+  let post_id = req.params.id;
+  let user_id = res.user.id;
+
+  if (!mongoose.Types.ObjectId.isValid(post_id)) {
+    return res.status(400).send('Post not found');
+  }
+
+  try {
+    post = await Post.findById(post_id);
+    if (!post) {
+      return res.status(400).send('Post not found');
+    }
+
+    // check if post has already been liked by user
+    if (
+      post.likes.filter((like) => like.user.toString() === user_id).length == 0
+    ) {
+      return res.status(400).json({ msg: 'You have not liked this post yet.' });
+    }
+
+    post = await Post.findByIdAndUpdate(
+      post_id,
+      { $pull: { likes: { user: user_id } } },
+      { new: true }
+    );
+
+    res.json(post.likes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error');
+  }
+});
+
+// @route PUT api/posts/comment/add/:id
+// @desc Add comment to post by id
+// @access Private
+router.put(
+  '/comment/add/:id',
+  [auth, [check('text', 'Comment text can not be blank').not().isEmpty()]],
+  async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty) {
+      return res.json(errors);
+    }
+
+    let post_id = req.params.id;
+    let user_id = res.user.id;
+
+    if (!mongoose.Types.ObjectId.isValid(post_id)) {
+      return res.status(400).send('Post not found');
+    }
+
+    try {
+      post = await Post.findById(post_id);
+      if (!post) {
+        return res.status(400).send('Post not found');
+      }
+
+      const user = await User.findById(user_id);
+
+      // compile comment object
+      const commentObject = {};
+      commentObject.text = req.body.text;
+      commentObject.user = user_id;
+      commentObject.name = user.name;
+      commentObject.avatar = user.avatar;
+
+      post.comments.push(commentObject);
+      post = await post.save();
+
+      res.json(post.comments);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
+// @route PUT api/posts/comment/remove/:comment_id/:post_id
+// @desc Remove comment from post
+// @access Private
+router.put('/comment/remove/:comment_id/:post_id', auth, async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty) {
+    return res.json(errors);
+  }
+
+  let post_id = req.params.post_id;
+  let comment_id = req.params.comment_id;
+  let user_id = res.user.id;
+
+  if (!mongoose.Types.ObjectId.isValid(post_id)) {
+    return res.status(400).send('Post not found');
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(comment_id)) {
+    return res.status(400).send('Comment not found');
+  }
+
+  try {
+    post = await Post.findById(post_id);
+    if (!post) {
+      return res.status(400).send('Post not found');
+    }
+
+    // check if the comment exists in the specific post
+
+    var commentExists = post.comments.some(function (comment) {
+      return comment.id == comment_id;
+    });
+
+    if (!commentExists) {
+      return res.status(400).json({ msg: 'Comment not found' });
+    }
+
+    post = await Post.findByIdAndUpdate(
+      post_id,
+      { $pull: { comments: { _id: comment_id } } },
+      { new: true }
+    );
+
+    res.json(post.comments);
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');

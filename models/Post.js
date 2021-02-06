@@ -15,7 +15,7 @@ var PostSchema = new Schema({
       user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
       name: { type: String },
       avatar: { type: String },
-      text: { type: String },
+      text: { type: String, required: true },
       date: { type: Date, default: Date.now },
     },
   ],
