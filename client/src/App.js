@@ -4,21 +4,28 @@ import { Navbar } from './components/layout/Navbar';
 import { Landing } from './components/layout/Landing';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Login } from './components/auth/Login';
-import { Register } from './components/auth/Register';
+import Register from './components/auth/Register';
+import Alert from './components/layout/Alert';
+// redux
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => (
-  <Fragment>
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path='/' component={Landing} />
+  <Provider store={store}>
+    <Fragment>
+      <Router>
+        <Navbar />
         <div className='container'>
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/login' component={Login} />
+          <Alert />
+          <Switch>
+            <Route exact path='/' component={Landing} />  
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
+          </Switch>
         </div>
-      </Switch>
-    </Router>
-  </Fragment>
+      </Router>
+    </Fragment>
+  </Provider>
 );
 
 export default App;
