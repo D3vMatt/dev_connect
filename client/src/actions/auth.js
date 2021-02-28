@@ -5,6 +5,8 @@ import {
   REGISTER_FAIL,
   USER_AUTHENTICATION_SUCCESS,
   USER_AUTHENTICATION_FAIL,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
 } from './constants';
 import { setAlert } from './alert';
 import { setAuthTokenAsGlobalHeader } from '../utils/setAuthToken';
@@ -34,6 +36,7 @@ export const registerUser = (name, email, password) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: response.data,
     });
+    dispatch(authenticateUser());
   } catch (error) {
     let errors = error.response.data.errors.errors;
     if (errors) {
@@ -43,5 +46,19 @@ export const registerUser = (name, email, password) => async (dispatch) => {
       });
     }
     dispatch({ type: REGISTER_FAIL });
+  }
+};
+
+export const login = (email, password) => async (dispatch) => {
+  try {
+    const res = await axios.post('api/auth', { email, password });
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: res.data,
+    });
+    dispatch(authenticateUser());
+  } catch (error) {
+    console.log(error.response);
+    dispatch({ type: USER_LOGIN_FAIL });
   }
 };

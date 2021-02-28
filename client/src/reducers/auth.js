@@ -3,16 +3,16 @@ import {
   REGISTER_FAIL,
   USER_AUTHENTICATION_FAIL,
   USER_AUTHENTICATION_SUCCESS,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAIL,
 } from '../actions/constants';
 
-const initialState = [
-  {
-    token: localStorage.getItem('token'),
-    isAuthenticated: false,
-    loading: true,
-    user: null,
-  },
-];
+const initialState = {
+  token: localStorage.getItem('token'),
+  isAuthenticated: false,
+  loading: true,
+  user: null,
+};
 
 export default function (state = initialState, action) {
   const { payload, type } = action;
@@ -20,10 +20,11 @@ export default function (state = initialState, action) {
     case USER_AUTHENTICATION_SUCCESS:
       return {
         ...state,
-        ...payload,
+        user: { ...payload },
         isAuthenticated: true,
       };
     case REGISTER_SUCCESS:
+    case USER_LOGIN_SUCCESS:
       // save token in local stoarge
       localStorage.setItem('token', payload.token);
       return {
@@ -34,6 +35,7 @@ export default function (state = initialState, action) {
       };
     case REGISTER_FAIL:
     case USER_AUTHENTICATION_FAIL:
+    case USER_LOGIN_FAIL:
       localStorage.removeItem('token');
       return {
         ...state,

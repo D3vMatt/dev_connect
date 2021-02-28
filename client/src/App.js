@@ -3,7 +3,7 @@ import './App.css';
 import { Navbar } from './components/layout/Navbar';
 import { Landing } from './components/layout/Landing';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Login } from './components/auth/Login';
+import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
 // redux
