@@ -1,0 +1,25 @@
+--- GET USER WHEN MAIN APP IS LOADED ---
+    - add constatns user_loaded and auth error
+    - actions/auth.js
+        - create a get user action
+            - check to see if we have a token stored in local storage
+            - if we do, set the token as a global header
+            - make api/auth request
+                - if success dispatch user LOADED
+                - else dispatch auth error
+
+    - add dispatch methods to reducer
+
+    - inside app.js check if we have a token in local storage if we do add it do global headers
+        - use useEffect to call our get/auth/user action
+           
+
+
+
+        - create utils/setAuthToken.js ( add token to axios global headers )
+            - function takes in token, if the token is there, add it to the headers else delete it from the headers
+            - if we have a token - set the token header (global)
+            - else delete the global token
+    
+
+
