@@ -3,8 +3,28 @@ import {
   ALERT_TYPE_DANGER,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  USER_AUTHENTICATION_SUCCESS,
+  USER_AUTHENTICATION_FAIL,
 } from './constants';
 import { setAlert } from './alert';
+import { setAuthTokenAsGlobalHeader } from '../utils/setAuthToken';
+
+export const authenticateUser = () => async (dispatch) => {
+  setAuthTokenAsGlobalHeader();
+  try {
+    const user = await axios.get('api/auth');
+    dispatch({
+      type: USER_AUTHENTICATION_SUCCESS,
+      payload: user.data,
+    });
+    console.log(user);
+  } catch (error) {
+    console.log(error.response);
+    dispatch({
+      type: USER_AUTHENTICATION_FAIL,
+    });
+  }
+};
 
 export const registerUser = (name, email, password) => async (dispatch) => {
   try {
