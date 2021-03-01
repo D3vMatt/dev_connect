@@ -7,6 +7,7 @@ import {
   USER_AUTHENTICATION_FAIL,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
+  USER_LOGOUT,
 } from './constants';
 import { setAlert } from './alert';
 import { setAuthTokenAsGlobalHeader } from '../utils/setAuthToken';
@@ -61,4 +62,8 @@ export const login = (email, password) => async (dispatch) => {
     console.log(error.response);
     dispatch({ type: USER_LOGIN_FAIL });
   }
+};
+
+export const logout = () => async (dispatch) => {
+  dispatch({ type: USER_LOGOUT });
 };
