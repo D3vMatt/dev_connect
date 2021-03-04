@@ -5,8 +5,11 @@ import {
   getCurrentProfile,
   deleteProfileExperience,
   deleteProfileEducation,
+  deleteAccount,
 } from '../../actions/profile';
 import { useEffect } from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const Dashboard = ({
   auth,
@@ -14,10 +17,30 @@ const Dashboard = ({
   profile,
   deleteProfileExperience,
   deleteProfileEducation,
+  deleteAccount,
 }) => {
+  
+  // TODO: If there is no profile data - Show No profile setup message
+
   useEffect(() => {
     getCurrentProfile();
   }, []);
+
+  const deleteProfileConfirmation = () => {
+    confirmAlert({
+      title: 'Ar you sure you want to delete your profile?',
+      message: 'This action can not be undone.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteAccount(),
+        },
+        {
+          label: 'No',
+        },
+      ],
+    });
+  };
 
   return (
     <div>
@@ -105,7 +128,10 @@ const Dashboard = ({
       </table>
 
       <div className='my-2'>
-        <button className='btn btn-danger'>
+        <button
+          className='btn btn-danger'
+          onClick={() => deleteProfileConfirmation()}
+        >
           <i className='fas fa-user-minus'></i>
           Delete My Account
         </button>
@@ -120,6 +146,7 @@ Dashboard.propTypes = {
   profile: PropTypes.object.isRequired,
   deleteProfileExperience: PropTypes.func.isRequired,
   deleteProfileEducation: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -131,4 +158,5 @@ export default connect(mapStateToProps, {
   getCurrentProfile,
   deleteProfileExperience,
   deleteProfileEducation,
+  deleteAccount,
 })(Dashboard);

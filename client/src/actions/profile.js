@@ -7,9 +7,11 @@ import {
   PROFILE_EXPERIENCE_DELETE_ERROR,
   PROFILE_EDUCATION_DELETE_ERROR,
   PROFILE_EDUCATION_DELETE_SUCCESS,
+  PROFILE_ACCOUNT_DELETE_SUCCESS,
+  PROFILE_ACCOUNT_DELETE_ERROR,
 } from './constants';
 import { setAlert } from './alert';
-import profile from '../reducers/profile';
+import { logout } from './auth';
 
 export const getCurrentProfile = () => async (dispatch) => {
   try {
@@ -68,6 +70,24 @@ export const deleteProfileEducation = (education_id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PROFILE_EDUCATION_DELETE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+    dispatch(setAlert('A error has occured.', ALERT_TYPE_DANGER));
+  }
+};
+
+export const deleteAccount = () => async (dispatch) => {
+  try {
+    await axios.delete('/api/profile');
+    dispatch({ type: PROFILE_ACCOUNT_DELETE_SUCCESS });
+    dispatch(logout());
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: PROFILE_ACCOUNT_DELETE_ERROR,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

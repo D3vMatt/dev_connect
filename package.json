@@ -21,6 +21,7 @@
     "gravator": "^1.0.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.12",
+    "react-confirm-alert": "^2.7.0",
     "request": "^2.88.2",
     "uuidv4": "^6.2.6"
   },
