@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import {
   getCurrentProfile,
   deleteProfileExperience,
+  deleteProfileEducation,
 } from '../../actions/profile';
 import { useEffect } from 'react';
 
@@ -12,6 +13,7 @@ const Dashboard = ({
   getCurrentProfile,
   profile,
   deleteProfileExperience,
+  deleteProfileEducation,
 }) => {
   useEffect(() => {
     getCurrentProfile();
@@ -90,7 +92,12 @@ const Dashboard = ({
                   {new Date(education.to).toLocaleDateString('en-GB')}
                 </td>
                 <td>
-                  <button className='btn btn-danger'>Delete</button>
+                  <button
+                    className='btn btn-danger'
+                    onClick={() => deleteProfileEducation(education._id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -112,6 +119,7 @@ Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   deleteProfileExperience: PropTypes.func.isRequired,
+  deleteProfileEducation: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -122,4 +130,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getCurrentProfile,
   deleteProfileExperience,
+  deleteProfileEducation,
 })(Dashboard);

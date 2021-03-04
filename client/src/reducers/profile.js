@@ -3,6 +3,8 @@ import {
   PROFILE_EXPERIENCE_DELETE_SUCCESS,
   PROFILE_GET_ERROR,
   PROFILE_GET_SUCCESS,
+  PROFILE_EDUCATION_DELETE_ERROR,
+  PROFILE_EDUCATION_DELETE_SUCCESS,
 } from '../actions/constants';
 
 const initialState = {
@@ -18,6 +20,7 @@ export default function (state = initialState, action) {
   switch (type) {
     case PROFILE_GET_SUCCESS:
     case PROFILE_EXPERIENCE_DELETE_SUCCESS:
+    case PROFILE_EDUCATION_DELETE_SUCCESS:
       return {
         ...state,
         profile: { ...payload.profile },
@@ -25,6 +28,7 @@ export default function (state = initialState, action) {
       };
     case PROFILE_GET_ERROR:
     case PROFILE_EXPERIENCE_DELETE_ERROR:
+    case PROFILE_EDUCATION_DELETE_ERROR:
       return {
         ...state,
         loading: false,
