@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../actions/profile';
+import {
+  getCurrentProfile,
+  deleteProfileExperience,
+} from '../../actions/profile';
 import { useEffect } from 'react';
 
-const Dashboard = ({ auth, getCurrentProfile, profile }) => {
+const Dashboard = ({
+  auth,
+  getCurrentProfile,
+  profile,
+  deleteProfileExperience,
+}) => {
   useEffect(() => {
     getCurrentProfile();
   }, []);
-
-  // create delete exeperience & education actions
-  function deleteExperience(id) {
-    console.log(id);
-  }
 
   return (
     <div>
@@ -55,7 +58,7 @@ const Dashboard = ({ auth, getCurrentProfile, profile }) => {
                 <td>
                   <button
                     className='btn btn-danger'
-                    onClick={() => deleteExperience(experience._id)}
+                    onClick={() => deleteProfileExperience(experience._id)}
                   >
                     Delete
                   </button>
@@ -108,6 +111,7 @@ Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
+  deleteProfileExperience: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -115,4 +119,7 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, {
+  getCurrentProfile,
+  deleteProfileExperience,
+})(Dashboard);

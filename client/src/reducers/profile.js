@@ -1,4 +1,9 @@
-import { PROFILE_GET_ERROR, PROFILE_GET_SUCCESS } from '../actions/constants';
+import {
+  PROFILE_EXPERIENCE_DELETE_ERROR,
+  PROFILE_EXPERIENCE_DELETE_SUCCESS,
+  PROFILE_GET_ERROR,
+  PROFILE_GET_SUCCESS,
+} from '../actions/constants';
 
 const initialState = {
   profile: null,
@@ -12,12 +17,14 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case PROFILE_GET_SUCCESS:
+    case PROFILE_EXPERIENCE_DELETE_SUCCESS:
       return {
         ...state,
         profile: { ...payload.profile },
         loading: false,
       };
     case PROFILE_GET_ERROR:
+    case PROFILE_EXPERIENCE_DELETE_ERROR:
       return {
         ...state,
         loading: false,
