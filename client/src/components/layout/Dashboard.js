@@ -10,6 +10,7 @@ import {
 import { useEffect } from 'react';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { Link } from 'react-router-dom';
 
 const Dashboard = ({
   auth,
@@ -19,7 +20,6 @@ const Dashboard = ({
   deleteProfileEducation,
   deleteAccount,
 }) => {
-  
   // TODO: If there is no profile data - Show No profile setup message
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Dashboard = ({
 
   const deleteProfileConfirmation = () => {
     confirmAlert({
-      title: 'Ar you sure you want to delete your profile?',
+      title: 'Ar you sure you want to delete your account?',
       message: 'This action can not be undone.',
       buttons: [
         {
@@ -49,9 +49,9 @@ const Dashboard = ({
         <i className='fas fa-user'></i> Welcome {auth.user && auth.user.name}
       </p>
       <div className='dash-buttons'>
-        <a href='edit-profile.html' className='btn btn-light'>
+        <Link to='/profile/edit' className='btn btn-light'>
           <i className='fas fa-user-circle text-primary'></i> Edit Profile
-        </a>
+        </Link>
         <a href='add-experience.html' className='btn btn-light'>
           <i className='fab fa-black-tie text-primary'></i> Add Experience
         </a>

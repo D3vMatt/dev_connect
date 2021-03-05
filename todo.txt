@@ -1,15 +1,2 @@
---- CREATE PROFILE REDUCER ---
-    - state 
-        - profile
-        - profiles
-        - repos
-        - loading
-        - error
-    - actions
-        - get profile
-        - profile error
-    - create get profile action
-        - getCurrentProfile
-
-    - we use the profile action in the Dashboard
-        - get current profile on load in Dashboard        
+--- TODO ---
+    - Rsearch why we need Prop Types

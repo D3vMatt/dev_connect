@@ -33,6 +33,7 @@ export default function (state = initialState, action) {
     case PROFILE_EXPERIENCE_DELETE_ERROR:
     case PROFILE_EDUCATION_DELETE_ERROR:
     case PROFILE_ACCOUNT_DELETE_ERROR:
+      console.log(payload);
       return {
         ...state,
         loading: false,
