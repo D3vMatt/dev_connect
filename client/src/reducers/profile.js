@@ -7,6 +7,8 @@ import {
   PROFILE_EDUCATION_DELETE_SUCCESS,
   PROFILE_ACCOUNT_DELETE_SUCCESS,
   PROFILE_ACCOUNT_DELETE_ERROR,
+  PROFILE_CREATE_FAIL,
+  PROFILE_CREATE_SUCCESS,
 } from '../actions/constants';
 
 const initialState = {
@@ -33,6 +35,7 @@ export default function (state = initialState, action) {
     case PROFILE_EXPERIENCE_DELETE_ERROR:
     case PROFILE_EDUCATION_DELETE_ERROR:
     case PROFILE_ACCOUNT_DELETE_ERROR:
+    case PROFILE_CREATE_FAIL:
       console.log(payload);
       return {
         ...state,

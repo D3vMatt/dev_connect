@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';
 import { ALERT_TYPE_SUCCESS, ALERT_TYPE_DANGER } from '../../actions/constants';
-
-// TODO: add a onChange && set value of all form elements
-// TODO: update profile information to include all info in form
-// TODO: check that all form fields exist as profile fields in DB
+import { updateCurrentProfile } from '../../actions/profile';
+import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const formReducer = (state, event) => {
   return {
@@ -15,7 +14,10 @@ const formReducer = (state, event) => {
   };
 };
 
-const ProfileForm = ({ profile, setAlert }) => {
+// TODO: Get update profile API call working
+// TODO: update social media state -> its weird because its nested
+
+const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
   const [formData, setFormData] = useReducer(formReducer, profile.profile);
   const [submitting, setSubmitting] = useState(false);
 
@@ -27,16 +29,11 @@ const ProfileForm = ({ profile, setAlert }) => {
     });
   };
 
-  console.log(formData);
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setAlert('Profile Saved.', ALERT_TYPE_SUCCESS);
-    }, 1000);
+    updateCurrentProfile(formData);
   };
+
   return (
     <Fragment>
       <h1 className='large text-primary'>Create Your Profile</h1>
@@ -45,11 +42,10 @@ const ProfileForm = ({ profile, setAlert }) => {
         profile stand out
       </p>
 
-      {submitting && <p className='lead'>Submtting Form...</p>}
       <small>* = required field</small>
       <form className='form' onSubmit={handleSubmit}>
         <div className='form-group'>
-          <select name='status'>
+          <select name='status' onChange={handleChange} value={formData.status}>
             <option value='0'>* Select Professional Status</option>
             <option value='Developer'>Developer</option>
             <option value='Junior Developer'>Junior Developer</option>
@@ -117,6 +113,8 @@ const ProfileForm = ({ profile, setAlert }) => {
             type='text'
             placeholder='Github Username'
             name='githubusername'
+            onChange={handleChange}
+            value={formData.githubusername}
           />
           <small className='form-text'>
             If you want your latest repos and a Github link, include your
@@ -124,7 +122,12 @@ const ProfileForm = ({ profile, setAlert }) => {
           </small>
         </div>
         <div className='form-group'>
-          <textarea placeholder='A short bio of yourself' name='bio'></textarea>
+          <textarea
+            placeholder='A short bio of yourself'
+            name='bio'
+            onChange={handleChange}
+            value={formData.bio}
+          ></textarea>
           <small className='form-text'>Tell us a little about yourself</small>
         </div>
 
@@ -137,27 +140,57 @@ const ProfileForm = ({ profile, setAlert }) => {
 
         <div className='form-group social-input'>
           <i className='fab fa-twitter fa-2x'></i>
-          <input type='text' placeholder='Twitter URL' name='twitter' />
+          <input
+            type='text'
+            placeholder='Twitter URL'
+            name='twitter'
+            onChange={handleChange}
+            value={formData.social.twitter}
+          />
         </div>
 
         <div className='form-group social-input'>
           <i className='fab fa-facebook fa-2x'></i>
-          <input type='text' placeholder='Facebook URL' name='facebook' />
+          <input
+            type='text'
+            placeholder='Facebook URL'
+            name='facebook'
+            onChange={handleChange}
+            value={formData.social.facebook}
+          />
         </div>
 
         <div className='form-group social-input'>
           <i className='fab fa-youtube fa-2x'></i>
-          <input type='text' placeholder='YouTube URL' name='youtube' />
+          <input
+            type='text'
+            placeholder='YouTube URL'
+            name='youtube'
+            onChange={handleChange}
+            value={formData.social.youtube}
+          />
         </div>
 
         <div className='form-group social-input'>
           <i className='fab fa-linkedin fa-2x'></i>
-          <input type='text' placeholder='Linkedin URL' name='linkedin' />
+          <input
+            type='text'
+            placeholder='Linkedin URL'
+            name='linkedin'
+            onChange={handleChange}
+            value={formData.social.linkedin}
+          />
         </div>
 
         <div className='form-group social-input'>
           <i className='fab fa-instagram fa-2x'></i>
-          <input type='text' placeholder='Instagram URL' name='instagram' />
+          <input
+            type='text'
+            placeholder='Instagram URL'
+            name='instagram'
+            onChange={handleChange}
+            value={formData.social.instagram}
+          />
         </div>
         <input type='submit' className='btn btn-primary my-1' />
         <a className='btn btn-light my-1' href='dashboard.html'>
@@ -175,6 +208,9 @@ const mapStateToProps = (state) => ({
 ProfileForm.propTypes = {
   profile: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
+  updateCurrentProfile: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { setAlert })(ProfileForm);
+export default connect(mapStateToProps, { setAlert, updateCurrentProfile })(
+  ProfileForm
+);

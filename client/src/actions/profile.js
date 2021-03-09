@@ -9,6 +9,10 @@ import {
   PROFILE_EDUCATION_DELETE_SUCCESS,
   PROFILE_ACCOUNT_DELETE_SUCCESS,
   PROFILE_ACCOUNT_DELETE_ERROR,
+  PROFILE_CREATE_FAIL,
+  PROFILE_CREATE_SUCCESS,
+  PROFILE_UPDATE_SUCCESS,
+  PROFILE_UPDATE_FAIL,
 } from './constants';
 import { setAlert } from './alert';
 import { logout } from './auth';
@@ -94,5 +98,26 @@ export const deleteAccount = () => async (dispatch) => {
       },
     });
     dispatch(setAlert('A error has occured.', ALERT_TYPE_DANGER));
+  }
+};
+
+export const updateCurrentProfile = (profile_data) => async (dispatch) => {
+  try {
+    console.log('We are hitting this try block.');
+    const response = await axios.post('/api/profile', profile_data);
+    console.log(response);
+    dispatch({
+      type: PROFILE_CREATE_SUCCESS,
+      payload: response.data,
+    });
+  } catch (error) {
+    let errors = error.response.data.errors.errors;
+    if (errors) {
+      errors.forEach((error) => {
+        console.log(error);
+        dispatch(setAlert(error.msg, ALERT_TYPE_DANGER));
+      });
+    }
+    dispatch({ type: PROFILE_CREATE_FAIL });
   }
 };
