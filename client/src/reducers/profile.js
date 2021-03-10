@@ -9,6 +9,8 @@ import {
   PROFILE_ACCOUNT_DELETE_ERROR,
   PROFILE_CREATE_FAIL,
   PROFILE_CREATE_SUCCESS,
+  PROFILE_UPDATE_SUCCESS,
+  PROFILE_UPDATE_FAIL,
 } from '../actions/constants';
 
 const initialState = {
@@ -26,6 +28,7 @@ export default function (state = initialState, action) {
     case PROFILE_EXPERIENCE_DELETE_SUCCESS:
     case PROFILE_EDUCATION_DELETE_SUCCESS:
     case PROFILE_ACCOUNT_DELETE_SUCCESS:
+    case PROFILE_UPDATE_SUCCESS:
       return {
         ...state,
         profile: { ...payload.profile },
@@ -36,11 +39,12 @@ export default function (state = initialState, action) {
     case PROFILE_EDUCATION_DELETE_ERROR:
     case PROFILE_ACCOUNT_DELETE_ERROR:
     case PROFILE_CREATE_FAIL:
+    case PROFILE_UPDATE_FAIL:
       console.log(payload);
       return {
         ...state,
         loading: false,
-        errors: [...payload.errors],
+        // errors: [...payload.errors],
       };
     default:
       return { ...state };

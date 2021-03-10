@@ -103,21 +103,27 @@ export const deleteAccount = () => async (dispatch) => {
 
 export const updateCurrentProfile = (profile_data) => async (dispatch) => {
   try {
-    console.log('We are hitting this try block.');
     const response = await axios.post('/api/profile', profile_data);
-    console.log(response);
     dispatch({
-      type: PROFILE_CREATE_SUCCESS,
+      type: PROFILE_UPDATE_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
+    dispatch({
+      type: PROFILE_UPDATE_FAIL,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+
     let errors = error.response.data.errors.errors;
-    if (errors) {
-      errors.forEach((error) => {
-        console.log(error);
-        dispatch(setAlert(error.msg, ALERT_TYPE_DANGER));
-      });
-    }
-    dispatch({ type: PROFILE_CREATE_FAIL });
+    // if (errors) {
+    //   errors.forEach((error) => {
+    //     console.log(error);
+    //     dispatch(setAlert(error.msg, ALERT_TYPE_DANGER));
+    //   });
+    // }
+    // dispatch({ type: PROFILE_UPDATE_FAIL });
   }
 };

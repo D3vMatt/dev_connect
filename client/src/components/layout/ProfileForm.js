@@ -2,10 +2,7 @@ import React, { Fragment, useState, useReducer } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';
-import { ALERT_TYPE_SUCCESS, ALERT_TYPE_DANGER } from '../../actions/constants';
 import { updateCurrentProfile } from '../../actions/profile';
-import { Redirect } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 
 const formReducer = (state, event) => {
   return {
@@ -16,6 +13,7 @@ const formReducer = (state, event) => {
 
 // TODO: Get update profile API call working
 // TODO: update social media state -> its weird because its nested
+// TODO: dashboard is being rednered twice
 
 const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
   const [formData, setFormData] = useReducer(formReducer, profile.profile);
@@ -45,7 +43,11 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
       <small>* = required field</small>
       <form className='form' onSubmit={handleSubmit}>
         <div className='form-group'>
-          <select name='status' onChange={handleChange} value={formData.status}>
+          <select
+            name='status'
+            onChange={handleChange}
+            value={formData.status || ''}
+          >
             <option value='0'>* Select Professional Status</option>
             <option value='Developer'>Developer</option>
             <option value='Junior Developer'>Junior Developer</option>

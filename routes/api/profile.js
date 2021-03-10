@@ -12,7 +12,7 @@ const request = require('request');
 
 // @route GET api/profile/me
 // @desc Get user specific profile
-// @access Public
+// @access Private
 router.get('/me', auth, async (req, res) => {
   try {
     // query the Profile model
@@ -31,22 +31,21 @@ router.get('/me', auth, async (req, res) => {
     res.json(profile);
   } catch (error) {
     console.error(error.message);
-    res.send(500).send('Server error.');
+    res.status(500).send('Server error.');
   }
 });
 
 // @route POST api/profile
 // @desc Create or update a profile
-// @access Public
+// @access Private
 router.post(
   '/',
   [auth, [check('status', 'Status cant be empty').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
-
     const {
       company,
       website,
@@ -56,23 +55,32 @@ router.post(
       bio,
       githubusername,
     } = req.body;
+
     const profileObject = {};
-    //profileObject.user = res.user.id;
+    // profileObject.user = res.user.id;
     if (company) profileObject.company = company;
     if (website) profileObject.website = website;
     if (location) profileObject.location = location;
     if (status) profileObject.status = status;
     if (skills)
-      profileObject.skills = skills.split(',').map((skill) => skill.trim()); // todo: skills should be turned into a array
+      profileObject.skills = skills.split(',').map((skill) => skill.trim());
     if (bio) profileObject.bio = bio;
     if (githubusername) profileObject.githubusername = githubusername;
-    profileObject.social = {};
-    const { youtube, twitter, facebook, linkedin, instagram } = req.body.social;
-    if (youtube) profileObject.social.youtube = youtube;
-    if (twitter) profileObject.social.twitter = twitter;
-    if (facebook) profileObject.social.facebook = facebook;
-    if (linkedin) profileObject.social.linkedin = linkedin;
-    if (instagram) profileObject.social.instagram = instagram;
+    if (req.body.social) {
+      profileObject.social = {};
+      const {
+        youtube,
+        twitter,
+        facebook,
+        linkedin,
+        instagram,
+      } = req.body.social;
+      if (youtube) profileObject.social.youtube = youtube;
+      if (twitter) profileObject.social.twitter = twitter;
+      if (facebook) profileObject.social.facebook = facebook;
+      if (linkedin) profileObject.social.linkedin = linkedin;
+      if (instagram) profileObject.social.instagram = instagram;
+    }
 
     try {
       profile = await Profile.findOne({ user: res.user.id });
