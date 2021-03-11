@@ -106,7 +106,7 @@ export const updateCurrentProfile = (profile_data) => async (dispatch) => {
     const response = await axios.post('/api/profile', profile_data);
     dispatch({
       type: PROFILE_UPDATE_SUCCESS,
-      payload: response.data,
+      payload: { profile: response.data },
     });
   } catch (error) {
     dispatch({
@@ -118,12 +118,11 @@ export const updateCurrentProfile = (profile_data) => async (dispatch) => {
     });
 
     let errors = error.response.data.errors.errors;
-    // if (errors) {
-    //   errors.forEach((error) => {
-    //     console.log(error);
-    //     dispatch(setAlert(error.msg, ALERT_TYPE_DANGER));
-    //   });
-    // }
-    // dispatch({ type: PROFILE_UPDATE_FAIL });
+    if (errors) {
+      errors.forEach((error) => {
+        console.log(error);
+        dispatch(setAlert(error.msg, ALERT_TYPE_DANGER));
+      });
+    }
   }
 };

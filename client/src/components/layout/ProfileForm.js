@@ -3,22 +3,28 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';
 import { updateCurrentProfile } from '../../actions/profile';
+import { useHistory } from 'react-router-dom';
 
 const formReducer = (state, event) => {
+  if (
+    ['facebook', 'instagram', 'linkedin', 'twitter', 'youtube'].includes(
+      event.name
+    )
+  ) {
+    return {
+      ...state,
+      social: { ...state.social, [event.name]: event.value },
+    };
+  }
   return {
     ...state,
     [event.name]: event.value,
   };
 };
 
-// TODO: Get update profile API call working
-// TODO: Bug with api/profile create/update API
-// TODO: update social media state -> its weird because its nested
-// TODO: dashboard is being rednered twice
-
 const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
   const [formData, setFormData] = useReducer(formReducer, profile.profile);
-  const [submitting, setSubmitting] = useState(false);
+  let history = useHistory();
 
   const handleChange = (event) => {
     const isCheckbox = event.target.type === 'checkbox';
@@ -31,11 +37,17 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     updateCurrentProfile(formData);
+    history.goBack();
+  };
+
+  const goBack = (event) => {
+    event.preventDefault();
+    history.goBack();
   };
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Create Your Profile</h1>
+      <h1 className='large text-primary'>Edit Your Profile</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Let's get some information to make your
         profile stand out
@@ -196,9 +208,9 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
           />
         </div>
         <input type='submit' className='btn btn-primary my-1' />
-        <a className='btn btn-light my-1' href='dashboard.html'>
+        <button onClick={goBack} className='btn btn-light my-1'>
           Go Back
-        </a>
+        </button>
       </form>
     </Fragment>
   );
