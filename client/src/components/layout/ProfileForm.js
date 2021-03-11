@@ -12,6 +12,7 @@ const formReducer = (state, event) => {
 };
 
 // TODO: Get update profile API call working
+// TODO: Bug with api/profile create/update API
 // TODO: update social media state -> its weird because its nested
 // TODO: dashboard is being rednered twice
 

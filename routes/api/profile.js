@@ -57,13 +57,14 @@ router.post(
     } = req.body;
 
     const profileObject = {};
-    // profileObject.user = res.user.id;
     if (company) profileObject.company = company;
     if (website) profileObject.website = website;
     if (location) profileObject.location = location;
     if (status) profileObject.status = status;
     if (skills)
-      profileObject.skills = skills.split(',').map((skill) => skill.trim());
+      Array.isArray(skills)
+        ? (profileObject.skills = skills)
+        : (profileObject.skills = skills.split(','));
     if (bio) profileObject.bio = bio;
     if (githubusername) profileObject.githubusername = githubusername;
     if (req.body.social) {
