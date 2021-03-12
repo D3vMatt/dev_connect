@@ -9,6 +9,8 @@ import Alert from './components/layout/Alert';
 import Dashboard from './components/layout/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
 import ProfileForm from './components/layout/ProfileForm';
+import EducationForm from './components/layout/EducationForm';
+import ExperienceForm from './components/layout/ExperienceForm';
 
 // redux
 import { Provider } from 'react-redux';
@@ -39,6 +41,16 @@ const App = () => {
                 exact
                 path='/profile/edit'
                 component={ProfileForm}
+              />
+              <PrivateRoute
+                exact
+                path='/profile/experience/add'
+                component={ExperienceForm}
+              />
+              <PrivateRoute
+                exact
+                path='/profile/education/add'
+                component={EducationForm}
               />
             </div>
           </Switch>
