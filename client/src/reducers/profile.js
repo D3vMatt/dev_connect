@@ -11,6 +11,10 @@ import {
   PROFILE_CREATE_SUCCESS,
   PROFILE_UPDATE_SUCCESS,
   PROFILE_UPDATE_FAIL,
+  PROFILE_EXPERIENCE_ADD_FAIL,
+  PROFILE_EXPERIENCE_ADD_SUCCESS,
+  PROFILE_EDUCATION_ADD_FAIL,
+  PROFILE_EDUCATION_ADD_SUCCESS,
 } from '../actions/constants';
 
 const initialState = {
@@ -29,6 +33,8 @@ export default function (state = initialState, action) {
     case PROFILE_EDUCATION_DELETE_SUCCESS:
     case PROFILE_ACCOUNT_DELETE_SUCCESS:
     case PROFILE_UPDATE_SUCCESS:
+    case PROFILE_EXPERIENCE_ADD_SUCCESS:
+    case PROFILE_EDUCATION_ADD_SUCCESS:
       return {
         ...state,
         profile: { ...payload.profile },
@@ -40,6 +46,8 @@ export default function (state = initialState, action) {
     case PROFILE_ACCOUNT_DELETE_ERROR:
     case PROFILE_CREATE_FAIL:
     case PROFILE_UPDATE_FAIL:
+    case PROFILE_EXPERIENCE_ADD_FAIL:
+    case PROFILE_EDUCATION_ADD_FAIL:
       console.log(payload);
       return {
         ...state,

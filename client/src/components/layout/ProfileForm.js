@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useReducer } from 'react';
+import React, { Fragment, useReducer } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';

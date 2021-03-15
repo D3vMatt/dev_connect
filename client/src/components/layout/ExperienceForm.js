@@ -1,8 +1,27 @@
 import PropTypes from 'prop-types';
-import { Fragment } from 'react';
-import { GoBack } from '../../utils/helpers';
+import { Fragment, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { addProfileExperience } from '../../actions/profile';
+import { connect } from 'react-redux';
 
-const ExperienceForm = (props) => {
+const ExperienceForm = ({ addProfileExperience }) => {
+  let history = useHistory();
+
+  const [formData, setFormData] = useState({});
+
+  const handleChange = (e) => {
+    let isCheckbox = e.target.type == 'checkbox';
+    setFormData({
+      ...formData,
+      [e.target.name]: isCheckbox ? e.target.checked : e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addProfileExperience(formData);
+  };
+
   return (
     <Fragment>
       <h1 className='large text-primary'>Add An Experience</h1>
@@ -11,28 +30,51 @@ const ExperienceForm = (props) => {
         positions that you have had in the past
       </p>
       <small>* = required field</small>
-      <form className='form'>
+      <form className='form' onSubmit={handleSubmit}>
         <div className='form-group'>
-          <input type='text' placeholder='* Job Title' name='title' required />
+          <input
+            type='text'
+            placeholder='* Job Title'
+            name='title'
+            required
+            onChange={handleChange}
+          />
         </div>
         <div className='form-group'>
-          <input type='text' placeholder='* Company' name='company' required />
+          <input
+            type='text'
+            placeholder='* Company'
+            name='company'
+            required
+            onChange={handleChange}
+          />
         </div>
         <div className='form-group'>
-          <input type='text' placeholder='Location' name='location' />
+          <input
+            type='text'
+            placeholder='Location'
+            name='location'
+            onChange={handleChange}
+          />
         </div>
         <div className='form-group'>
           <h4>From Date</h4>
-          <input type='date' name='from' />
+          <input type='date' name='from' onChange={handleChange} />
         </div>
         <div className='form-group'>
           <p>
-            <input type='checkbox' name='current' value='' /> Current Job
+            <input
+              type='checkbox'
+              name='current'
+              value=''
+              onChange={handleChange}
+            />{' '}
+            Current Job
           </p>
         </div>
         <div className='form-group'>
           <h4>To Date</h4>
-          <input type='date' name='to' />
+          <input type='date' name='to' onChange={handleChange} />
         </div>
         <div className='form-group'>
           <textarea
@@ -40,15 +82,20 @@ const ExperienceForm = (props) => {
             cols='30'
             rows='5'
             placeholder='Job Description'
+            onChange={handleChange}
           ></textarea>
         </div>
         <input type='submit' className='btn btn-primary my-1' />
-        <button className='btn btn-light my-1'>Go Back</button>
+        <button className='btn btn-light my-1' onClick={history.goBack}>
+          Go Back
+        </button>
       </form>
     </Fragment>
   );
 };
 
-ExperienceForm.propTypes = {};
+ExperienceForm.propTypes = {
+  addProfileExperience: PropTypes.func.isRequired,
+};
 
-export default ExperienceForm;
+export default connect(null, { addProfileExperience })(ExperienceForm);
