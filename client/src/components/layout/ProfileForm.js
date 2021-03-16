@@ -2,10 +2,14 @@ import React, { Fragment, useReducer } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';
-import { updateCurrentProfile } from '../../actions/profile';
+import { createOrUpdateCurrentProfile } from '../../actions/profile';
 import { useHistory } from 'react-router-dom';
 
 const formReducer = (state, event) => {
+  if (state === null) {
+    state = {};
+    state.social = {};
+  }
   if (
     ['facebook', 'instagram', 'linkedin', 'twitter', 'youtube'].includes(
       event.name
@@ -22,7 +26,7 @@ const formReducer = (state, event) => {
   };
 };
 
-const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
+const ProfileForm = ({ profile, setAlert, createOrUpdateCurrentProfile }) => {
   const [formData, setFormData] = useReducer(formReducer, profile.profile);
   let history = useHistory();
 
@@ -32,12 +36,13 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
       name: event.target.name,
       value: isCheckbox ? event.target.checked : event.target.value,
     });
+    console.log(formData);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateCurrentProfile(formData);
-    history.goBack();
+    createOrUpdateCurrentProfile(formData);
+    // history.goBack();
   };
 
   const goBack = (event) => {
@@ -59,7 +64,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
           <select
             name='status'
             onChange={handleChange}
-            value={formData.status || ''}
+            value={formData ? formData.status : ''}
           >
             <option value='0'>* Select Professional Status</option>
             <option value='Developer'>Developer</option>
@@ -81,7 +86,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Company'
             name='company'
             onChange={handleChange}
-            value={formData.company || ''}
+            value={formData ? formData.company : ''}
           />
           <small className='form-text'>
             Could be your own company or one you work for
@@ -93,7 +98,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Website'
             name='website'
             onChange={handleChange}
-            value={formData.website || ''}
+            value={formData ? formData.website : ''}
           />
           <small className='form-text'>
             Could be your own or a company website
@@ -105,7 +110,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Location'
             name='location'
             onChange={handleChange}
-            value={formData.location || ''}
+            value={formData ? formData.location : ''}
           />
           <small className='form-text'>
             City & state suggested (eg. Boston, MA)
@@ -117,7 +122,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='* Skills'
             name='skills'
             onChange={handleChange}
-            value={formData.skills || ''}
+            value={formData ? formData.skills : ''}
           />
           <small className='form-text'>
             Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
@@ -129,7 +134,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Github Username'
             name='githubusername'
             onChange={handleChange}
-            value={formData.githubusername}
+            value={formData ? formData.githubusername : ''}
           />
           <small className='form-text'>
             If you want your latest repos and a Github link, include your
@@ -141,7 +146,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='A short bio of yourself'
             name='bio'
             onChange={handleChange}
-            value={formData.bio}
+            value={formData ? formData.bio : ''}
           ></textarea>
           <small className='form-text'>Tell us a little about yourself</small>
         </div>
@@ -160,7 +165,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Twitter URL'
             name='twitter'
             onChange={handleChange}
-            value={formData.social.twitter}
+            value={formData ? formData.social.twitter : ''}
           />
         </div>
 
@@ -171,7 +176,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Facebook URL'
             name='facebook'
             onChange={handleChange}
-            value={formData.social.facebook}
+            value={formData ? formData.social.facebook : ''}
           />
         </div>
 
@@ -182,7 +187,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='YouTube URL'
             name='youtube'
             onChange={handleChange}
-            value={formData.social.youtube}
+            value={formData ? formData.social.youtube : ''}
           />
         </div>
 
@@ -193,7 +198,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Linkedin URL'
             name='linkedin'
             onChange={handleChange}
-            value={formData.social.linkedin}
+            value={formData ? formData.social.linkedin : ''}
           />
         </div>
 
@@ -204,7 +209,7 @@ const ProfileForm = ({ profile, setAlert, updateCurrentProfile }) => {
             placeholder='Instagram URL'
             name='instagram'
             onChange={handleChange}
-            value={formData.social.instagram}
+            value={formData ? formData.social.instagram : ''}
           />
         </div>
         <input type='submit' className='btn btn-primary my-1' />
@@ -223,9 +228,10 @@ const mapStateToProps = (state) => ({
 ProfileForm.propTypes = {
   profile: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
-  updateCurrentProfile: PropTypes.func.isRequired,
+  createOrUpdateCurrentProfile: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, { setAlert, updateCurrentProfile })(
-  ProfileForm
-);
+export default connect(mapStateToProps, {
+  setAlert,
+  createOrUpdateCurrentProfile,
+})(ProfileForm);

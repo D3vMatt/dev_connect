@@ -44,6 +44,11 @@ const App = () => {
               />
               <PrivateRoute
                 exact
+                path='/profile/create'
+                component={ProfileForm}
+              />
+              <PrivateRoute
+                exact
                 path='/profile/experience/add'
                 component={ExperienceForm}
               />

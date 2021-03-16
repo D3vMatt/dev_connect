@@ -89,22 +89,24 @@ export const deleteProfileEducation = (education_id) => async (dispatch) => {
 export const deleteAccount = () => async (dispatch) => {
   try {
     await axios.delete('/api/profile');
-    dispatch({ type: PROFILE_ACCOUNT_DELETE_SUCCESS });
     dispatch(logout());
+    dispatch({ type: PROFILE_ACCOUNT_DELETE_SUCCESS });
   } catch (error) {
     console.log(error);
     dispatch({
       type: PROFILE_ACCOUNT_DELETE_ERROR,
-      payload: {
-        msg: error.response.statusText,
-        status: error.response.status,
-      },
+      // payload: {
+      //   msg: error.response.statusText,
+      //   status: error.response.status,
+      // },
     });
     dispatch(setAlert('A error has occured.', ALERT_TYPE_DANGER));
   }
 };
 
-export const updateCurrentProfile = (profile_data) => async (dispatch) => {
+export const createOrUpdateCurrentProfile = (profile_data) => async (
+  dispatch
+) => {
   try {
     const response = await axios.post('/api/profile', profile_data);
     dispatch({
@@ -119,7 +121,6 @@ export const updateCurrentProfile = (profile_data) => async (dispatch) => {
         status: error.response.status,
       },
     });
-
     let errors = error.response.data.errors.errors;
     if (errors) {
       errors.forEach((error) => {

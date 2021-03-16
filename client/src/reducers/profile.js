@@ -31,7 +31,6 @@ export default function (state = initialState, action) {
     case PROFILE_GET_SUCCESS:
     case PROFILE_EXPERIENCE_DELETE_SUCCESS:
     case PROFILE_EDUCATION_DELETE_SUCCESS:
-    case PROFILE_ACCOUNT_DELETE_SUCCESS:
     case PROFILE_UPDATE_SUCCESS:
     case PROFILE_EXPERIENCE_ADD_SUCCESS:
     case PROFILE_EDUCATION_ADD_SUCCESS:
@@ -40,6 +39,9 @@ export default function (state = initialState, action) {
         profile: { ...payload.profile },
         loading: false,
       };
+
+    case PROFILE_ACCOUNT_DELETE_SUCCESS:
+      return null;
     case PROFILE_GET_ERROR:
     case PROFILE_EXPERIENCE_DELETE_ERROR:
     case PROFILE_EDUCATION_DELETE_ERROR:
