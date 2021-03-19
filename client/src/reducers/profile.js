@@ -15,6 +15,7 @@ import {
   PROFILE_EXPERIENCE_ADD_SUCCESS,
   PROFILE_EDUCATION_ADD_FAIL,
   PROFILE_EDUCATION_ADD_SUCCESS,
+  CLEAR_PROFILE,
 } from '../actions/constants';
 
 const initialState = {
@@ -41,7 +42,13 @@ export default function (state = initialState, action) {
       };
 
     case PROFILE_ACCOUNT_DELETE_SUCCESS:
-      return null;
+    case CLEAR_PROFILE:
+      return {
+        ...state,
+        profile: null,
+        repos: [],
+        loading: false,
+      };
     case PROFILE_GET_ERROR:
     case PROFILE_EXPERIENCE_DELETE_ERROR:
     case PROFILE_EDUCATION_DELETE_ERROR:

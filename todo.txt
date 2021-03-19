@@ -1,4 +1,18 @@
 --- TODO ---
     - add sign in message if sign in fails
-    - Delete my account giving error and not redirecting to homepage
+    - Redirect/give feed back on profile update/create
+    - Change profile form title based on mode
+    - Add dashboard link (add icon)
+    - protect landing page against logged in users
+    - On profile form, have social media section hidden by default then toggle show with button click
+    - add params (history, edit = false) to createOrUpdateProfile action (might have to use withRouter on ProfileForm in order to pass histry to action)
+    - Move Dashboard links into sepearte component (DashboardActions)
+    - Inside profileForm add useEffect => getCurrentPorfile()
+    - For addExperience form disable to field if current is true (because we still work there)
+    - Create seperate components for Experience and Education -> put inside dashboard/
+    - Use react moment to format dates react-moment
+    - Refactor the profile actions (we are currently using way to many)
+    - Deleting the profile should hit ACCOUNT_DELETED action that is handled by auth reducer (does same as logout)
+    - in the backend deleting an account should also delete all the posts associated to that user
+    - 
     

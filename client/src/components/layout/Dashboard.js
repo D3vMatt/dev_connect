@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import spinner from '../layout/Spinner';
 import {
   getCurrentProfile,
   deleteProfileExperience,
@@ -40,6 +41,10 @@ const Dashboard = ({
       ],
     });
   };
+
+  if ((profile.profile === null) & profile.loading) {
+    return <spinner />;
+  }
 
   if (profile.profile) {
     return (
