@@ -15,4 +15,11 @@
     - Deleting the profile should hit ACCOUNT_DELETED action that is handled by auth reducer (does same as logout)
     - in the backend deleting an account should also delete all the posts associated to that user
     - 
+
+
+
+    - 23/03/2021
+        - Pass profile data to card and make profile card dynamic
+        - add view profile routes/jsx
+        - make view profile dynamic
     

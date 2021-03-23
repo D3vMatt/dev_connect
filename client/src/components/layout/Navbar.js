@@ -10,6 +10,9 @@ const Navbar = ({ logout, auth }) => {
   let auth_links = (
     <ul>
       <li>
+        <Link to='/profiles'>Developers</Link>
+      </li>
+      <li>
         <a onClick={logout}>
           Logout <i className='fas fa-sign-out-alt'></i>
         </a>

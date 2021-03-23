@@ -16,6 +16,8 @@ import {
   PROFILE_EDUCATION_ADD_FAIL,
   PROFILE_EDUCATION_ADD_SUCCESS,
   ALERT_TYPE_SUCCESS,
+  PROFILE_FETCH_ALL_SUCCESS,
+  PROFILE_FETCH_ALL_FAIL,
 } from './constants';
 import { setAlert } from './alert';
 import { logout } from './auth';
@@ -180,5 +182,23 @@ export const addProfileEducation = (education_data) => async (dispatch) => {
         dispatch(setAlert(error.msg, ALERT_TYPE_DANGER));
       });
     }
+  }
+};
+
+export const getAllProfiles = () => async (dispatch) => {
+  try {
+    let profiles = await axios.get('/api/profile');
+    dispatch({
+      type: PROFILE_FETCH_ALL_SUCCESS,
+      payload: profiles.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_FETCH_ALL_FAIL,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
   }
 };

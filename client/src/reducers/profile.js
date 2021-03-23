@@ -16,6 +16,8 @@ import {
   PROFILE_EDUCATION_ADD_FAIL,
   PROFILE_EDUCATION_ADD_SUCCESS,
   CLEAR_PROFILE,
+  PROFILE_FETCH_ALL_SUCCESS,
+  PROFILE_FETCH_ALL_FAIL,
 } from '../actions/constants';
 
 const initialState = {
@@ -41,6 +43,13 @@ export default function (state = initialState, action) {
         loading: false,
       };
 
+    case PROFILE_FETCH_ALL_SUCCESS:
+      return {
+        ...state,
+        profiles: [...payload],
+        loading: false,
+      };
+
     case PROFILE_ACCOUNT_DELETE_SUCCESS:
     case CLEAR_PROFILE:
       return {
@@ -57,6 +66,7 @@ export default function (state = initialState, action) {
     case PROFILE_UPDATE_FAIL:
     case PROFILE_EXPERIENCE_ADD_FAIL:
     case PROFILE_EDUCATION_ADD_FAIL:
+    case PROFILE_FETCH_ALL_FAIL:
       console.log(payload);
       return {
         ...state,
