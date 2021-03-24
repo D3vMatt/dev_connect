@@ -4,7 +4,7 @@ import ProfileCard from './ProfileCard';
 import { getAllProfiles } from '../../../actions/profile';
 import { connect } from 'react-redux';
 
-const Profiles = ({ getAllProfiles, profiles }) => {
+const ProfileMaster = ({ getAllProfiles, profiles }) => {
   useEffect(() => {
     getAllProfiles();
     console.log(profiles);
@@ -19,14 +19,14 @@ const Profiles = ({ getAllProfiles, profiles }) => {
       </p>
       <div className='profiles'>
         {profiles.map((profile) => (
-          <ProfileCard />
+          <ProfileCard profile={profile} />
         ))}
       </div>
     </Fragment>
   );
 };
 
-Profiles.propTypes = {
+ProfileMaster.propTypes = {
   getAllProfiles: PropTypes.func.isRequired,
   profiles: PropTypes.array.isRequired,
 };
@@ -35,4 +35,4 @@ const mapStateToProps = (state) => ({
   profiles: state.profile.profiles,
 });
 
-export default connect(mapStateToProps, { getAllProfiles })(Profiles);
+export default connect(mapStateToProps, { getAllProfiles })(ProfileMaster);
