@@ -18,6 +18,8 @@ import {
   ALERT_TYPE_SUCCESS,
   PROFILE_FETCH_ALL_SUCCESS,
   PROFILE_FETCH_ALL_FAIL,
+  PROFILE_FETCH_BY_USER_ID_FAIL,
+  PROFILE_FETCH_BY_USER_ID_SUCCESS,
 } from './constants';
 import { setAlert } from './alert';
 import { logout } from './auth';
@@ -195,6 +197,24 @@ export const getAllProfiles = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PROFILE_FETCH_ALL_FAIL,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+export const getProfileByUserId = (userId) => async (dispatch) => {
+  try {
+    let profile = await axios.get('/api/profile/' + userId);
+    dispatch({
+      type: PROFILE_FETCH_BY_USER_ID_SUCCESS,
+      payload: profile.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_FETCH_BY_USER_ID_FAIL,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,

@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 const ProfileMaster = ({ getAllProfiles, profiles }) => {
   useEffect(() => {
     getAllProfiles();
-    console.log(profiles);
   }, []);
 
   return (

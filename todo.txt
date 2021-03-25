@@ -22,4 +22,5 @@
         - Pass profile data to card and make profile card dynamic
         - add view profile routes/jsx
         - make view profile dynamic
+        - Format dates on profile details
     
