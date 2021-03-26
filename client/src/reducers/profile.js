@@ -20,6 +20,8 @@ import {
   PROFILE_FETCH_ALL_FAIL,
   PROFILE_FETCH_BY_USER_ID_SUCCESS,
   PROFILE_FETCH_BY_USER_ID_FAIL,
+  PROFILE_GIT_REPOS_SUCCESS,
+  PROFILE_GIT_REPOS_FAIL,
 } from '../actions/constants';
 
 const initialState = {
@@ -33,6 +35,12 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case PROFILE_GIT_REPOS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        repos: [...payload],
+      };
     case PROFILE_GET_SUCCESS:
     case PROFILE_EXPERIENCE_DELETE_SUCCESS:
     case PROFILE_EDUCATION_DELETE_SUCCESS:
@@ -77,7 +85,7 @@ export default function (state = initialState, action) {
     case PROFILE_EDUCATION_ADD_FAIL:
     case PROFILE_FETCH_ALL_FAIL:
     case PROFILE_FETCH_BY_USER_ID_FAIL:
-      console.log(payload);
+    case PROFILE_GIT_REPOS_FAIL:
       return {
         ...state,
         loading: false,

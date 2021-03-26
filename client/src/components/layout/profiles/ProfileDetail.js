@@ -2,9 +2,16 @@ import React, { Fragment, useEffect } from 'react';
 import { getProfileByUserId } from '../../../actions/profile';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
-const ProfileDetail = ({ match, getProfileByUserId, profile_details }) => {
+const ProfileDetail = ({
+  match,
+  getProfileByUserId,
+  profile_details,
+  repos,
+}) => {
   const { userId } = match.params;
+  let history = useHistory();
 
   useEffect(() => {
     getProfileByUserId(userId);
@@ -12,19 +19,25 @@ const ProfileDetail = ({ match, getProfileByUserId, profile_details }) => {
 
   return (
     <Fragment>
-      <a href='profiles.html' className='btn btn-light'>
+      <div onClick={history.goBack} className='btn btn-light'>
         Back To Profiles
-      </a>
+      </div>
 
       <div className='profile-grid my-1'>
         <div className='profile-top bg-primary p-2'>
           <img
             className='round-img my-1'
-            src={profile_details && profile_details.user.avatar}
+            src={
+              profile_details &&
+              profile_details.user &&
+              profile_details.user.avatar
+            }
             alt=''
           />
           <h1 className='large'>
-            {profile_details && profile_details.user.name}
+            {profile_details &&
+              profile_details.user &&
+              profile_details.user.name}
           </h1>
           <p className='lead'>
             {profile_details && profile_details.status} at{' '}
@@ -79,7 +92,10 @@ const ProfileDetail = ({ match, getProfileByUserId, profile_details }) => {
 
         <div className='profile-about bg-light p-2'>
           <h2 className='text-primary'>
-            {profile_details && profile_details.user.name}'s Bio
+            {profile_details &&
+              profile_details.user &&
+              profile_details.user.name}
+            's Bio
           </h2>
           <p>{profile_details && profile_details.bio}</p>
           <div className='line'></div>
@@ -117,68 +133,63 @@ const ProfileDetail = ({ match, getProfileByUserId, profile_details }) => {
 
         <div className='profile-edu bg-white p-2'>
           <h2 className='text-primary'>Education</h2>
-          <div>
-            <h3>University Of Washington</h3>
-            <p>Sep 1993 - June 1999</p>
-            <p>
-              <strong>Degree: </strong>Masters
-            </p>
-            <p>
-              <strong>Field Of Study: </strong>Computer Science
-            </p>
-            <p>
-              <strong>Description: </strong>Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Dignissimos placeat, dolorum ullam
-              ipsam, sapiente suscipit dicta eius velit amet aspernatur
-              asperiores modi quidem expedita fugit.
-            </p>
-          </div>
+          {profile_details &&
+            profile_details.education.map((education) => (
+              <div>
+                <h3>{education.school}</h3>
+                <p>
+                  {education.from} -{' '}
+                  {education.current ? 'current' : education.to}
+                </p>
+                <p>
+                  <strong>Degree: </strong>
+                  {education.degree}
+                </p>
+                <p>
+                  <strong>Field Of Study: </strong>
+                  {education.fieldOfStudy}
+                </p>
+                <p>
+                  <strong>Description: </strong>
+                  {education.description}
+                </p>
+              </div>
+            ))}
         </div>
 
         <div className='profile-github'>
           <h2 className='text-primary my-1'>
             <i className='fab fa-github'></i> Github Repos
           </h2>
-          <div className='repo bg-white p-1 my-1'>
-            <div>
-              <h4>
-                <a href='#' target='_blank' rel='noopener noreferrer'>
-                  Repo One
-                </a>
-              </h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellat, laborum!
-              </p>
-            </div>
-            <div>
-              <ul>
-                <li className='badge badge-primary'>Stars: 44</li>
-                <li className='badge badge-dark'>Watchers: 21</li>
-                <li className='badge badge-light'>Forks: 25</li>
-              </ul>
-            </div>
-          </div>
-          <div className='repo bg-white p-1 my-1'>
-            <div>
-              <h4>
-                <a href='#' target='_blank' rel='noopener noreferrer'>
-                  Repo Two
-                </a>
-              </h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Repellat, laborum!
-              </p>
-            </div>
-            <div>
-              <ul>
-                <li className='badge badge-primary'>Stars: 44</li>
-                <li className='badge badge-dark'>Watchers: 21</li>
-                <li className='badge badge-light'>Forks: 25</li>
-              </ul>
-            </div>
-          </div>
+
+          {repos &&
+            repos.map((repo) => (
+              <div className='repo bg-white p-1 my-1'>
+                <div>
+                  <h4>
+                    <a
+                      href={repo.html_url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      {repo.name}
+                    </a>
+                  </h4>
+                  <p>{repo.description}</p>
+                </div>
+                <div>
+                  <ul>
+                    <li className='badge badge-primary'>
+                      Stars: {repo.stargazers_count}
+                    </li>
+                    <li className='badge badge-dark'>
+                      Watchers: {repo.watchers}
+                    </li>
+                    <li className='badge badge-light'>Forks: {repo.forks}</li>
+                  </ul>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </Fragment>
@@ -188,10 +199,12 @@ const ProfileDetail = ({ match, getProfileByUserId, profile_details }) => {
 ProfileDetail.propTypes = {
   getProfileByUserId: PropTypes.func.isRequired,
   profile_details: PropTypes.object.isRequired,
+  repos: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   profile_details: state.profile.profiles[0],
+  repos: state.profile.repos,
 });
 
 export default connect(mapStateToProps, { getProfileByUserId })(ProfileDetail);

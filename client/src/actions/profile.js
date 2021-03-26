@@ -20,6 +20,8 @@ import {
   PROFILE_FETCH_ALL_FAIL,
   PROFILE_FETCH_BY_USER_ID_FAIL,
   PROFILE_FETCH_BY_USER_ID_SUCCESS,
+  PROFILE_GIT_REPOS_SUCCESS,
+  PROFILE_GIT_REPOS_FAIL,
 } from './constants';
 import { setAlert } from './alert';
 import { logout } from './auth';
@@ -212,9 +214,28 @@ export const getProfileByUserId = (userId) => async (dispatch) => {
       type: PROFILE_FETCH_BY_USER_ID_SUCCESS,
       payload: profile.data,
     });
+    dispatch(getGitHubRepos(profile.data.githubusername));
   } catch (error) {
     dispatch({
       type: PROFILE_FETCH_BY_USER_ID_FAIL,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+export const getGitHubRepos = (git_username) => async (dispatch) => {
+  try {
+    let repos = await axios.get(`/api/profile/github/${git_username}`);
+    dispatch({
+      type: PROFILE_GIT_REPOS_SUCCESS,
+      payload: repos.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PROFILE_GIT_REPOS_FAIL,
       payload: {
         msg: error.response.statusText,
         status: error.response.status,
