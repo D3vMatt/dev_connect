@@ -13,6 +13,8 @@ import EducationForm from './components/layout/EducationForm';
 import ExperienceForm from './components/layout/ExperienceForm';
 import ProfileMaster from './components/layout/profiles/ProfileMaster';
 import ProfileDetail from './components/layout/profiles/ProfileDetail';
+import PostsDetail from './components/layout/posts/PostsDetail';
+import PostsMaster from './components/layout/posts/PostsMaster';
 
 // redux
 import { Provider } from 'react-redux';
@@ -41,6 +43,12 @@ const App = () => {
               <Route exact path='/profiles' component={ProfileMaster} />
               <Route exact path='/profile/:userId' component={ProfileDetail} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/posts' component={PostsMaster} />
+              <PrivateRoute
+                exact
+                path='/post/:postId'
+                component={PostsDetail}
+              />
               <PrivateRoute
                 exact
                 path='/profile/edit'
