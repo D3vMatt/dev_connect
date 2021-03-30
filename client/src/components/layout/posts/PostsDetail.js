@@ -1,9 +1,12 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const PostsDetail = () => {
+  let history = useHistory();
+
   return (
     <div>
-      <a href='posts.html' class='btn'>
+      <a onClick={history.goBack} class='btn'>
         Back To Posts
       </a>
       <div class='post bg-white p-1 my-1'>

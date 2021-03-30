@@ -1,4 +1,8 @@
-import { POSTS_FAIL, POSTS_SUCCESS } from '../actions/constants';
+import {
+  POSTS_FAIL,
+  POSTS_SUCCESS,
+  POST_LIKE_SUCCESS,
+} from '../actions/constants';
 
 const initialState = {
   loading: true,
@@ -17,11 +21,16 @@ export default function (state = initialState, action) {
         posts: [...payload],
       };
       break;
+    case POST_LIKE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
     case POSTS_FAIL:
       return {
         ...state,
         loading: false,
-        errors: [...payload],
+        errors: { ...payload },
       };
     default:
       return { ...state };

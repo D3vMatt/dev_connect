@@ -1,21 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { likePost, unlikePost } from '../../../actions/post';
+import { connect } from 'react-redux';
 
-const PostCard = (props) => {
-  const {
-    _id,
-    text,
-    username,
-    avatar,
-    likes,
-    comments,
-    user,
-    date,
-  } = props.post;
-
-  const likePost = () => {
-    alert('Liking Post');
-  };
+const PostCard = ({ post, likePost, unlikePost }) => {
+  const { _id, text, username, avatar, likes, comments, user, date } = post;
 
   return (
     <div class='post bg-white p-1 my-1' key={_id}>
@@ -28,16 +18,25 @@ const PostCard = (props) => {
       <div>
         <p class='my-1'>{text}</p>
         <p class='post-date'>Posted on {date}</p>
-        <button type='button' onClick={likePost} class='btn btn-light'>
+        <button
+          onClick={() => likePost(_id)}
+          type='button'
+          class='btn btn-light'
+        >
           <i class='fas fa-thumbs-up'></i>
           <span>{likes.length}</span>
         </button>
-        <button type='button' class='btn btn-light'>
+        <button
+          data-id={_id}
+          onClick={() => unlikePost(_id)}
+          type='button'
+          class='btn btn-light'
+        >
           <i class='fas fa-thumbs-down'></i>
         </button>
-        <a href='post.html' class='btn btn-primary'>
+        <Link to={`/post/${_id}`} class='btn btn-primary'>
           Discussion <span class='comment-count'>{comments.length}</span>
-        </a>
+        </Link>
         <button type='button' class='btn btn-danger'>
           <i class='fas fa-times'></i>
         </button>
@@ -46,6 +45,9 @@ const PostCard = (props) => {
   );
 };
 
-PostCard.propTypes = {};
+PostCard.propTypes = {
+  likePost: PropTypes.func.isRequired,
+  unlikePost: PropTypes.func.isRequired,
+};
 
-export default PostCard;
+export default connect(null, { likePost, unlikePost })(PostCard);
