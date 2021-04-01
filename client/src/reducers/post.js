@@ -1,7 +1,9 @@
 import {
   POSTS_FAIL,
   POSTS_SUCCESS,
+  POST_CREATE_SUCCESS,
   POST_LIKE_SUCCESS,
+  PROFILE_GET_SUCCESS,
 } from '../actions/constants';
 
 const initialState = {
@@ -25,6 +27,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
+      };
+    case POST_CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        post: { ...payload },
       };
     case POSTS_FAIL:
       return {

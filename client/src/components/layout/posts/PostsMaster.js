@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getPosts } from '../../../actions/post';
 import PostCard from './PostCard';
+import PostForm from './PostForm';
 
 const PostsMaster = ({ posts, getPosts }) => {
   useEffect(() => {
@@ -15,23 +16,7 @@ const PostsMaster = ({ posts, getPosts }) => {
       <p class='lead'>
         <i class='fas fa-user'></i> Welcome to the community!
       </p>
-
-      <div class='post-form'>
-        <div class='bg-primary p'>
-          <h3>Say Something...</h3>
-        </div>
-        <form class='form my-1'>
-          <textarea
-            name='text'
-            cols='30'
-            rows='5'
-            placeholder='Create a post'
-            required
-          ></textarea>
-          <input type='submit' class='btn btn-dark my-1' value='Submit' />
-        </form>
-      </div>
-
+      <PostForm />
       <div class='posts'>
         {posts.map((post) => (
           <PostCard post={post} />
