@@ -16,6 +16,11 @@ const Navbar = ({ logout, auth }) => {
         <Link to='/posts'>Posts</Link>
       </li>
       <li>
+        <Link to='/dashboard'>
+          Dashboard <i className='fas fa-user-circle'></i>
+        </Link>
+      </li>
+      <li>
         <a onClick={logout}>
           Logout <i className='fas fa-sign-out-alt'></i>
         </a>
