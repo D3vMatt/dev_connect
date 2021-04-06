@@ -8,6 +8,8 @@ import {
   POST_CREATE_SUCCESS,
   ALERT_TYPE_DANGER,
   ALERT_TYPE_SUCCESS,
+  POST_GET_BY_ID_SUCCESS,
+  POST_ADD_COMMENT_SUCCESS,
 } from './constants';
 
 export const getPosts = () => async (dispatch) => {
@@ -94,6 +96,49 @@ export const deletePost = (postId) => async (dispatch) => {
       type: POST_CREATE_SUCCESS,
       payload: post.data,
     });
+    dispatch(getPosts());
+    dispatch(setAlert(`Post deleted.`, ALERT_TYPE_DANGER));
+  } catch (error) {
+    dispatch({
+      type: POSTS_FAIL,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+export const getPostById = (postId) => async (dispatch) => {
+  try {
+    let post = await axios.get(`/api/posts/${postId}`);
+    dispatch({
+      type: POST_GET_BY_ID_SUCCESS,
+      payload: post.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POSTS_FAIL,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+export const addPostComment = (text, postId) => async (dispatch) => {
+  alert('adding comment to post');
+  try {
+    let postComment = await axios.put(`/api/posts/comment/add/${postId}`, {
+      text,
+    });
+    dispatch({
+      type: POST_ADD_COMMENT_SUCCESS,
+      payload: postComment.response,
+    });
+    dispatch(getPostById(postId));
+    dispatch(setAlert('Comment added!', ALERT_TYPE_SUCCESS));
   } catch (error) {
     dispatch({
       type: POSTS_FAIL,

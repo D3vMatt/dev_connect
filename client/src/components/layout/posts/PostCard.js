@@ -3,12 +3,27 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { likePost, unlikePost, deletePost } from '../../../actions/post';
 import { connect } from 'react-redux';
+import { confirmAlert } from 'react-confirm-alert';
 
 const PostCard = ({ post, likePost, unlikePost, deletePost }) => {
   const { _id, text, username, avatar, likes, comments, user, date } = post;
 
   const handlePostDelete = (postId) => {
-    alert(`Are you sure you want to delete post: ${postId}`);
+    confirmAlert({
+      title: 'Ar you sure you want to delete this post?',
+      message: 'This action can not be undone.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deletePost(postId),
+        },
+        {
+          label: 'No',
+        },
+      ],
+    });
+
+    // alert(`Are you sure you want to delete post: ${postId}`);
   };
 
   return (
