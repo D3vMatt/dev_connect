@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ProfileCard from './ProfileCard';
-import { getAllProfiles } from '../../../actions/profile';
+import { getAllProfiles } from '../../actions/profile';
 import { connect } from 'react-redux';
 
 const ProfileMaster = ({ getAllProfiles, profiles }) => {

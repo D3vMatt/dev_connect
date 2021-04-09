@@ -1,7 +1,7 @@
 --- TODO ---
     - add sign in message if sign in fails
     - Redirect/give feed back on profile update/create
-    - Change profile form title based on mode
+    - Change profile form title based on mode   
     - protect landing page against logged in users
     - On profile form, have social media section hidden by default then toggle show with button click
     - add params (history, edit = false) to createOrUpdateProfile action (might have to use withRouter on ProfileForm in order to pass histry to action)
@@ -13,4 +13,11 @@
     - Refactor the profile actions (we are currently using way to many)
     - Deleting the profile should hit ACCOUNT_DELETED action that is handled by auth reducer (does same as logout)
     - in the backend deleting an account should also delete all the posts associated to that user
+    - show spinner if profiles loading
+    - On profiles page, check if profiles is greater than 0 else show message no profiles found
+    - on profile page add if loading || profile == null show spinner
+    - on the current profile details page, if the current profile matches the one in the profile details page, show link to edit profile
+    - if profile experiences.length > 0 show ex else show no experiences
+    - break up profile details into different components
+    - import Moment from react-moment <Moment format='YYYY/MM/DD'></Moment>
     

@@ -8,11 +8,11 @@ import Register from './components/auth/Register';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/layout/Dashboard';
 import PrivateRoute from './components/routing/PrivateRoute';
-import ProfileForm from './components/layout/ProfileForm';
-import EducationForm from './components/layout/EducationForm';
-import ExperienceForm from './components/layout/ExperienceForm';
-import ProfileMaster from './components/layout/profiles/ProfileMaster';
-import ProfileDetail from './components/layout/profiles/ProfileDetail';
+import ProfileForm from './components/profile-forms/ProfileForm';
+import EducationForm from './components/profile-forms/EducationForm';
+import ExperienceForm from './components/profile-forms/ExperienceForm';
+import ProfileMaster from './components/profiles/ProfileMaster';
+import ProfileDetail from './components/profile/ProfileDetail';
 import PostsDetail from './components/layout/posts/PostsDetail';
 import PostsMaster from './components/layout/posts/PostsMaster';
 
