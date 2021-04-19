@@ -25,11 +25,11 @@ const PostForm = ({ createPost }) => {
   };
 
   return (
-    <div class='post-form'>
-      <div class='bg-primary p'>
+    <div className='post-form'>
+      <div className='bg-primary p'>
         <h3>Say Something...</h3>
       </div>
-      <form class='form my-1' onSubmit={handleSubmit}>
+      <form className='form my-1' onSubmit={handleSubmit}>
         <textarea
           name='text'
           cols='30'
@@ -39,7 +39,7 @@ const PostForm = ({ createPost }) => {
           value={formData.text}
           onChange={handleChange}
         ></textarea>
-        <input type='submit' class='btn btn-dark my-1' value='Submit' />
+        <input type='submit' className='btn btn-dark my-1' value='Submit' />
       </form>
     </div>
   );

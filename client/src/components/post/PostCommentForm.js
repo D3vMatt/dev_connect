@@ -21,11 +21,11 @@ const PostCommentForm = ({ addPostComment, postId }) => {
   };
 
   return (
-    <div class='post-form'>
-      <div class='bg-primary p'>
+    <div className='post-form'>
+      <div className='bg-primary p'>
         <h3>Leave A Comment</h3>
       </div>
-      <form class='form my-1' onSubmit={handleSumbit}>
+      <form className='form my-1' onSubmit={handleSumbit}>
         <textarea
           name='text'
           cols='30'
@@ -35,7 +35,7 @@ const PostCommentForm = ({ addPostComment, postId }) => {
           value={fromData.text}
           onChange={handleChange}
         ></textarea>
-        <input type='submit' class='btn btn-dark my-1' value='Submit' />
+        <input type='submit' className='btn btn-dark my-1' value='Submit' />
       </form>
     </div>
   );

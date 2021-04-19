@@ -1,5 +1,4 @@
 import axios from 'axios';
-import post from '../reducers/post';
 import { setAlert } from './alert';
 import {
   POSTS_FAIL,
