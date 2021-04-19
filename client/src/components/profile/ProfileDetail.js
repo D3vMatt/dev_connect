@@ -7,6 +7,8 @@ import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience';
 import Spinner from '../layout/Spinner';
+import ProfileGithub from './ProfileGithub';
+import ProfileEducation from './ProfileEducation';
 
 const ProfileDetail = ({
   match,
@@ -37,66 +39,8 @@ const ProfileDetail = ({
       <div className='profile-grid my-1'>
         <ProfileAbout profile={profile_details} />
         <ProfileExperience experiences={profile_details.experience} />
-        <div className='profile-edu bg-white p-2'>
-          <h2 className='text-primary'>Education</h2>
-          {profile_details &&
-            profile_details.education.map((education) => (
-              <div>
-                <h3>{education.school}</h3>
-                <p>
-                  {education.from} -{' '}
-                  {education.current ? 'current' : education.to}
-                </p>
-                <p>
-                  <strong>Degree: </strong>
-                  {education.degree}
-                </p>
-                <p>
-                  <strong>Field Of Study: </strong>
-                  {education.fieldOfStudy}
-                </p>
-                <p>
-                  <strong>Description: </strong>
-                  {education.description}
-                </p>
-              </div>
-            ))}
-        </div>
-
-        <div className='profile-github'>
-          <h2 className='text-primary my-1'>
-            <i className='fab fa-github'></i> Github Repos
-          </h2>
-
-          {repos &&
-            repos.map((repo) => (
-              <div className='repo bg-white p-1 my-1'>
-                <div>
-                  <h4>
-                    <a
-                      href={repo.html_url}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      {repo.name}
-                    </a>
-                  </h4>
-                  <p>{repo.description}</p>
-                </div>
-                <div>
-                  <ul>
-                    <li className='badge badge-primary'>
-                      Stars: {repo.stargazers_count}
-                    </li>
-                    <li className='badge badge-dark'>
-                      Watchers: {repo.watchers}
-                    </li>
-                    <li className='badge badge-light'>Forks: {repo.forks}</li>
-                  </ul>
-                </div>
-              </div>
-            ))}
-        </div>
+        <ProfileEducation education_list={profile_details.education} />
+        <ProfileGithub repos={repos} />
       </div>
     </Fragment>
   );
