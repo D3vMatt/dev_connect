@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getPosts } from '../../../actions/post';
+import { getPosts } from '../../actions/post';
 import PostCard from './PostCard';
 import PostForm from './PostForm';
 

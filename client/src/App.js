@@ -13,8 +13,8 @@ import EducationForm from './components/profile-forms/EducationForm';
 import ExperienceForm from './components/profile-forms/ExperienceForm';
 import ProfileMaster from './components/profiles/ProfileMaster';
 import ProfileDetail from './components/profile/ProfileDetail';
-import PostsDetail from './components/layout/posts/PostsDetail';
-import PostsMaster from './components/layout/posts/PostsMaster';
+import PostsDetail from './components/post/PostsDetail';
+import PostsMaster from './components/posts/PostsMaster';
 
 // redux
 import { Provider } from 'react-redux';

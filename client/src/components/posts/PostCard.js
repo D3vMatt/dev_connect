@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { likePost, unlikePost, deletePost } from '../../../actions/post';
+import { likePost, unlikePost, deletePost } from '../../actions/post';
 import { connect } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
 

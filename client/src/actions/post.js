@@ -128,7 +128,6 @@ export const getPostById = (postId) => async (dispatch) => {
 };
 
 export const addPostComment = (text, postId) => async (dispatch) => {
-  alert('adding comment to post');
   try {
     let postComment = await axios.put(`/api/posts/comment/add/${postId}`, {
       text,
